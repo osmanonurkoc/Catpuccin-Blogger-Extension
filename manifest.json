@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Catppuccin Blogger Editor Tools",
+  "version": "1.0",
+  "description": "Injects custom theme tags and inline code highlighters into the Blogger toolbar.",
+  "author": "Osman Onur Koç (@osmanonurkoc)",
+  "homepage_url": "https://osmanonurkoc.com",
+    "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.blogger.com/blog/post/edit/*",
+        "*://www.blogger.com/blog/page/edit/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
