@@ -175,11 +175,25 @@ function injectToolbar() {
     toolbar.appendChild(extContainer);
 }
 
-const observer = new MutationObserver((mutations, obs) => {
-    const toolbar = document.querySelector('.Wdqgzf');
-    if (toolbar) {
+// ==========================================================
+// SPA AGGRESSIVE INJECTION ENGINE
+// ==========================================================
+
+// 1. Continuous Mutation Observer (For dynamic DOM changes)
+const observer = new MutationObserver(() => {
+    // If the native toolbar exists but our extension doesn't, inject it immediately
+    if (document.querySelector('.Wdqgzf') && !document.getElementById('cat-toolbar-extension')) {
         injectToolbar();
     }
 });
 
+// Start observing the entire document body from the beginning
 observer.observe(document.body, { childList: true, subtree: true });
+
+// 2. Fallback Mechanism (Blogger's DOM engine can sometimes evade the observer)
+// A lightweight polling engine that checks once every second
+setInterval(() => {
+    if (window.location.href.includes('/edit') && document.querySelector('.Wdqgzf') && !document.getElementById('cat-toolbar-extension')) {
+        injectToolbar();
+    }
+}, 1000);
